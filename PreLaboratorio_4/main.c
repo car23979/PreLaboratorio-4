@@ -5,7 +5,9 @@
  * Author : David Carranza
  */ 
 
-#define F_CPU 16000000UL
+#define F_CPU 16000000
 #include <avr/io.h>
+#include <avr/interrupt.h>
+
 
 
