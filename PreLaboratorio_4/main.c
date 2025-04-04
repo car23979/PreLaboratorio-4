@@ -45,4 +45,17 @@ int main() {
 			 contador++;
 		 }
 	 }
-	 estado_inc = inc_actual;
+	 estado_inc = inc_actual
+	 
+	 // Lógica antirrebote para decremento
+	 if (dec_actual && !estado_dec) {
+		 _delay_ms(20);
+		 if (!(PINB & (1 << DEC_PIN))) {
+			 contador--;
+		 }
+	 }
+	 estado_dec = dec_actual;
+
+	 actualizar_leds(); // Actualizar LEDs
+ }
+ }
