@@ -32,4 +32,8 @@ void actualizar_leds() {
 int main() {
 	configurar_puertos();
 	uint8_t estado_inc = 1, estado_dec = 1;
- 
+	
+	while(1) {
+	 // Leer estados de los botones (pull-up activado: 0 = presionado)
+	 uint8_t inc_actual = !(PINB & (1 << INC_PIN));
+	 uint8_t dec_actual = !(PINB & (1 << DEC_PIN));
