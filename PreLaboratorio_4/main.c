@@ -37,3 +37,12 @@ int main() {
 	 // Leer estados de los botones (pull-up activado: 0 = presionado)
 	 uint8_t inc_actual = !(PINB & (1 << INC_PIN));
 	 uint8_t dec_actual = !(PINB & (1 << DEC_PIN));
+	 
+	 // Lógica antirrebote para incremento
+	 if (inc_actual && !estado_inc) {
+		 _delay_ms(20);
+		 if (!(PINB & (1 << INC_PIN))) {
+			 contador++;
+		 }
+	 }
+	 estado_inc = inc_actual;
