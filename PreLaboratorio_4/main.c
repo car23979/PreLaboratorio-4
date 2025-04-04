@@ -24,4 +24,12 @@ void configurar_puertos() {
 	PORTB |= (1 << INC_PIN) | (1 << DEC_PIN);   // Activar pull-ups
 }
 
-// 
+void actualizar_leds() {
+	PORTD = contador; // Mostrar el contador directamente en PD0-PD7
+}
+
+// Configuración Puertos
+int main() {
+	configurar_puertos();
+	uint8_t estado_inc = 1, estado_dec = 1;
+ 
