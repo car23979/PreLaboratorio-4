@@ -45,6 +45,13 @@ const uint8_t tabla_7seg[] = {
 	0x8E  // F: 1 0 0 0 1 1 1 (0x71 invertido)
 };
 
+void configurar_ADC() {
+	ADMUX = (1 << REFS0) | (1 << ADLAR) | POTENCIOMETRO; // ADC7 (A7)
+	ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+}
+
+
+
 // Puertos
 void configurar_puertos() {
 	DDRD = 0xFF;    // Todos los pines D como salidas
