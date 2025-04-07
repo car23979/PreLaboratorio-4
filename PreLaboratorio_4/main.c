@@ -1,7 +1,7 @@
 /*
- * PreLaboratorio_4.c
+ * PostLaboratorio_4.c
  *
- * Created: 03/04/2025 09:30:46 a. m
+ * Created: 03/04/2025 09:30:46 a. m.
  * Author : David Carranza
  */ 
 
