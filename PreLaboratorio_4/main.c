@@ -94,3 +94,20 @@ int main() {
 	sei();
 	
 	uint8_t estado_inc = 1, estado_dec = 1;
+	
+	while(1) {
+		// Antirrebote
+		uint8_t inc_actual = !(PINB & (1 << INC_PIN));
+		uint8_t dec_actual = !(PINB & (1 << DEC_PIN));
+		
+		if (inc_actual && !estado_inc) {
+			_delay_ms(20);
+			if (!(PINB & (1 << INC_PIN))) contador++;
+		}
+		estado_inc = inc_actual;
+		
+		if (dec_actual && !estado_dec) {
+			_delay_ms(20);
+			if (!(PINB & (1 << DEC_PIN))) contador--;
+		}
+		estado_dec = dec_actual;
