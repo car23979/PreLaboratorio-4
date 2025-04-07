@@ -19,6 +19,9 @@
 #define POTENCIOMETRO 7  // ADC7 (A7)
 
 volatile uint8_t contador = 0;
+volatile uint8_t valor_adc = 0;
+volatile uint8_t digitos[2];
+volatile uint8_t digito_actual = 0;
 
 // Puertos
 void configurar_puertos() {
