@@ -111,3 +111,17 @@ int main() {
 			if (!(PINB & (1 << DEC_PIN))) contador--;
 		}
 		estado_dec = dec_actual;
+		
+		// Actualizar LEDs
+		PORTD = contador;
+		
+		// Procesar ADC
+		valor_adc = leer_ADC();
+		digitos[0] = (valor_adc >> 4) & 0x0F;
+		digitos[1] = valor_adc & 0x0F;
+		
+		// Activar alarma si ADC es mayou que contador
+		if (valor_adc > contador) PORTB |= (1 << ALARMA);
+		else PORTB &= ~(1 << ALARMA);
+	}
+}
