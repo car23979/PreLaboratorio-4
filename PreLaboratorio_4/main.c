@@ -81,43 +81,16 @@ ISR(TIMER1_COMPA_vect) {
 	digito_actual = !digito_actual;
 }
 
-// Puertos
-void configurar_puertos() {
-	DDRD = 0xFF;    // Todos los pines D como salidas
-	DDRB &= ~((1 << INC_PIN) | (1 << DEC_PIN)); // PB0 y PB1 como entradas
-	PORTB |= (1 << INC_PIN) | (1 << DEC_PIN);   // Pull-ups activados
-}
-
-void actualizar_leds() {
-	PORTD = contador;
-}
-
 int main() {
-	configurar_puertos();
+	DDRD = 0xFF;   // LEDs contador (PD0-PD7)
+	DDRB |= (1 << DIGITO1) | (1 << DIGITO2) | (1 << ALARMA) | (1 << PB5);
+	DDRC |= 0x3F;  // Segmentos b-g (PC0-PC5)
+	
+	// Pull-ups para botones
+	PORTB |= (1 << INC_PIN) | (1 << DEC_PIN);
+	
+	configurar_ADC();
+	configurar_timer();
+	sei();
+	
 	uint8_t estado_inc = 1, estado_dec = 1;
-
-	while(1) {
-		uint8_t inc_actual = !(PINB & (1 << INC_PIN));
-		uint8_t dec_actual = !(PINB & (1 << DEC_PIN));  // Variable ahora usada
-
-		// Lógica para incremento
-		if (inc_actual && !estado_inc) {
-			_delay_ms(20);
-			if (!(PINB & (1 << INC_PIN))) {
-				contador++;
-			}
-		}
-		estado_inc = inc_actual;
-
-		// Lógica para decremento (corregido)
-		if (dec_actual && !estado_dec) {  // Ahora usa las variables correctas
-			_delay_ms(20);
-			if (!(PINB & (1 << DEC_PIN))) {
-				contador--;
-			}
-		}
-		estado_dec = dec_actual;  // Variable ahora usada
-
-		actualizar_leds();
-	}
-}
