@@ -50,7 +50,18 @@ void configurar_ADC() {
 	ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
 
+uint8_t leer_ADC() {
+	ADCSRA |= (1 << ADSC);
+	while (ADCSRA & (1 << ADSC));
+	return ADCH;
+}
 
+void configurar_timer() {
+	TCCR1A = 0;
+	TCCR1B = (1 << WGM12) | (1 << CS12) | (1 << CS10);
+	OCR1A = 156;
+	TIMSK1 = (1 << OCIE1A);
+}
 
 // Puertos
 void configurar_puertos() {
