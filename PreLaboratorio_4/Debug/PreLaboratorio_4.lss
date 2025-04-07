@@ -88,10 +88,10 @@ Disassembly of section .text:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000090 <configurar_puertos>:
-#define DEC_PIN    PB1
 
 volatile uint8_t contador = 0;
 
+// Puertos
 void configurar_puertos() {
 	DDRD = 0xFF;    // Todos los pines D como salidas
   90:	8f ef       	ldi	r24, 0xFF	; 255
