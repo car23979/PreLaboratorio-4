@@ -63,6 +63,24 @@ void configurar_timer() {
 	TIMSK1 = (1 << OCIE1A);
 }
 
+ISR(TIMER1_COMPA_vect) {
+	uint8_t segmentos = tabla_7seg[digitos[digito_actual]];
+	
+	// Control de segmentos (activar en LOW)
+	PORTB = (PORTB & 0x1F) | ((segmentos & 0x01) << 5); // a (PB5)
+	PORTC = (segmentos >> 1) & 0x3F; // b-g (PC0-PC5)
+	
+	// Multiplexación de dígitos (activar en HIGH para ánodo común)
+	if (digito_actual == 0) {
+		PORTB |= (1 << DIGITO1);
+		PORTB &= ~(1 << DIGITO2);
+		} else {
+		PORTB |= (1 << DIGITO2);
+		PORTB &= ~(1 << DIGITO1);
+	}
+	digito_actual = !digito_actual;
+}
+
 // Puertos
 void configurar_puertos() {
 	DDRD = 0xFF;    // Todos los pines D como salidas
