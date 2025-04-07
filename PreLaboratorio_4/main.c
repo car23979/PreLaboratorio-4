@@ -23,6 +23,28 @@ volatile uint8_t valor_adc = 0;
 volatile uint8_t digitos[2];
 volatile uint8_t digito_actual = 0;
 
+// Tabla 7 segmentos invertida para ÁNODO COMÚN (segmentos activos en LOW)
+// Conexión: PB5=a, PC0=b, PC1=c, PC2=d, PC3=e, PC4=f, PC5=g
+const uint8_t tabla_7seg[] = {
+	// bits: g f e d c b a (0=encendido)
+	0xC0, // 0: 1 1 0 0 0 0 0 (0x40 invertido)
+	0xF9, // 1: 1 1 1 1 1 0 0 (0x9F invertido)
+	0xA4, // 2: 1 0 1 0 0 1 0 (0x25 invertido)
+	0xB0, // 3: 1 0 1 1 0 0 0 (0x0D invertido)
+	0x99, // 4: 1 0 0 1 1 0 0 (0x99 invertido)
+	0x92, // 5: 1 0 0 1 0 0 1 (0x49 invertido)
+	0x82, // 6: 1 0 0 0 0 0 1 (0x41 invertido)
+	0xF8, // 7: 1 1 1 1 1 0 0 (0x1F invertido)
+	0x80, // 8: 1 0 0 0 0 0 0 (0x01 invertido)
+	0x90, // 9: 1 0 0 1 0 0 0 (0x09 invertido)
+	0x88, // A: 1 0 0 0 1 0 0 (0x11 invertido)
+	0x83, // B: 1 0 0 0 0 0 1 (0xC1 invertido)
+	0xC6, // C: 1 1 0 0 0 1 1 (0x63 invertido)
+	0xA1, // D: 1 0 1 0 0 0 1 (0x85 invertido)
+	0x86, // E: 1 0 0 0 0 1 1 (0x61 invertido)
+	0x8E  // F: 1 0 0 0 1 1 1 (0x71 invertido)
+};
+
 // Puertos
 void configurar_puertos() {
 	DDRD = 0xFF;    // Todos los pines D como salidas
